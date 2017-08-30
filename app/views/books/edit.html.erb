@@ -1,0 +1,17 @@
+<div>
+	<h1>Edit Book Record</h1>
+	<p>Book Title: <u><%= book.id %></u></p>
+	<form action="/books/update?id=<%= book.id %>" method="post">
+		<label>
+			Title: <input type="text" name="title" size="35" value="<%= book.title %>">
+		</label>
+		<br>
+		<input type="submit" value="Save Book">
+	</form>
+	<br>
+	<form action="/books/destroy?id=<%= book.id %>" method="post">
+		<input type="submit" value="Destroy it instead!">
+	</form>
+</div>
+
+
