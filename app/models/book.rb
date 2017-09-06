@@ -21,7 +21,7 @@ class Book
 	end
 
 	def self.first
-		@@books.first
+		@@books[1]
 	end
 
 	def self.last
