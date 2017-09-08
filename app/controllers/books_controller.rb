@@ -3,10 +3,10 @@ require_relative '../models/book'
 class BooksController < BlocWorks::Controller
   attr_accessor :book, :books 
 
-	def welcome
+  def welcome
     @book = Book.first
-		render :welcome
-	end
+    render :welcome
+  end
 
   def index
     @books = Book.all
@@ -18,13 +18,13 @@ class BooksController < BlocWorks::Controller
   end
 
   def show
-  	id = @env["QUERY_STRING"].split('=')[1].to_i
+    id = @env["QUERY_STRING"].split('=')[1].to_i
     @book = Book.find(id)
     render :show
   end
 
   def edit
-  	id = @env["QUERY_STRING"].split('=')[1].to_i
+    id = @env["QUERY_STRING"].split('=')[1].to_i
     @book = Book.find(id)
     render :edit
   end
@@ -35,10 +35,10 @@ class BooksController < BlocWorks::Controller
     Book.new(title).save
     @book = Book.last
     if @book.title == title
-      render :show
+      redirect_to '/books/show'
     else
       flash[:error] = "Error creating book.  Please try again."
-      render :new
+      redirect_to '/books/new'
     end
   end
 
@@ -50,7 +50,7 @@ class BooksController < BlocWorks::Controller
     @book.title = request.params["title"]
     @book.save
 
-    render :welcome
+    redirect_to "/books/welcome"
   end
 
   def destroy
@@ -58,7 +58,7 @@ class BooksController < BlocWorks::Controller
     id = request.params["id"].to_i
 
     Book.destroy(id)
-    @book = Book.first
-    render :welcome
+
+    redirect_to "/books/welcome"
   end
 end

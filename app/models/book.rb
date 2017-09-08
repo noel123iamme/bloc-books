@@ -1,36 +1,36 @@
 class Book
-	@@books = [nil]
+  @@books = [nil]
 
-	attr_accessor :id, :title
+  attr_accessor :id, :title
 
-	def initialize(title)
-		@id = @@books.length
-		@title = title
-	end
+  def initialize(title)
+    @id = @@books.length
+    @title = title
+  end
 
-	def self.all
-		@@books
-	end
+  def self.all
+    @@books
+  end
 
-	def self.destroy(id)
-		@@books[id] = nil
-	end
+  def self.destroy(id)
+    @@books[id] = nil
+  end
 
-	def self.find(id)
-		@@books[id]
-	end
+  def self.find(id)
+    @@books[id]
+  end
 
-	def self.first
-		@@books[1]
-	end
+  def self.first
+    @@books[1]
+  end
 
-	def self.last
-		@@books.last
-	end
+  def self.last
+    @@books.last
+  end
 
-	def save
-		@@books[@id] = self
-	end
+  def save
+    @@books[@id] = self
+  end
 end
 
 Book.new("Eloquent Ruby").save

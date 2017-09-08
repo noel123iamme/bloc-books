@@ -1,0 +1,15 @@
+<div>
+  <h1>Edit Library Record</h1>
+  <p>Library Title: <u><%= @library.id %></u></p>
+  <form action="/libraries/update?id=<%= @library.id %>" method="post">
+    <label>
+      Title: <input type="text" name="title" size="35" value="<%= @library.title %>">
+    </label>
+    <br>
+    <input type="submit" value="Save Library">
+  </form>
+  <br>
+  <form action="/libraries/destroy?id=<%= @library.id %>" method="post">
+    <input type="submit" value="Destroy it instead!">
+  </form>
+</div>

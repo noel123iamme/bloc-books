@@ -1,21 +1,38 @@
-class Library 
-	def initialize
-		@@library = ["San Francisco Municipal Library", "Benicia City Library", "Golden State Law Library"]
-	end
+class Library
+  @@libraries = [nil]
 
-	def all
-		@@library
-	end
+  attr_accessor :id, :title
 
-	def find(id)
-		@@library[id]
-	end
+  def initialize(title)
+    @id = @@libraries.length
+    @title = title
+  end
 
-	def first
-		@@library.first
-	end
+  def self.all
+    @@libraries
+  end
 
-	def last
-		@@library.last
-	end
+  def self.destroy(id)
+    @@libraries[id] = nil
+  end
+
+  def self.find(id)
+    @@libraries[id]
+  end
+
+  def self.first
+    @@libraries[1]
+  end
+
+  def self.last
+    @@libraries.last
+  end
+
+  def save
+    @@libraries[@id] = self
+  end
 end
+
+Library.new("San Francisco Munical Library").save
+Library.new("Library of Congress").save
+Library.new("University of California Library").save
