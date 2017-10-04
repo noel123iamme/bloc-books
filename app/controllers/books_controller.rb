@@ -46,9 +46,13 @@ class BooksController < BlocWorks::Controller
     request = Rack::Request.new(@env)
     id = request.params["id"].to_i
 
+    puts request.params
+
     @book = Book.find(id)
+    puts "#{@book.id} - #{@book.title}"
     @book.title = request.params["title"]
-    @book.save
+    puts "#{@book.id} - #{@book.title}"
+    @book.save!
 
     redirect_to "/books/welcome"
   end
