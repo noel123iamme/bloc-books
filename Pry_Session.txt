@@ -1,0 +1,488 @@
+Pry Session
+
+➜  bloc-books git:(adp-checkpoint3-orm) ✗ bundle exec rackup -p 3000
+[2017-10-24 23:12:01] INFO  WEBrick 1.3.1
+[2017-10-24 23:12:01] INFO  ruby 2.3.0 (2015-12-25) [x86_64-darwin16]
+[2017-10-24 23:12:01] INFO  WEBrick::HTTPServer#start: pid=96672 port=3000
+
+From: /Users/Home/bloc/rails-projects/bloc_works/lib/bloc_works.rb @ line 11 BlocWorks::Application#call:
+
+    10: def call(env)
+ => 11:   binding.pry
+    12:   if env['PATH_INFO'] == '/favicon.ico'
+    13:     [404, {'Content-Type' => 'text/html'}, []]
+    14:   else
+    15:     controller_class, action_name = self.controller_and_action(env)
+    16:     if action_name == ""
+    17:       action_name = "index" 
+    18:     elsif action_name.nil?
+    19:       action_name = "index"
+    20:     end
+    21:     if controller_class.nil? then
+    22:       [200, {'Content-Type' => 'text/html'}, ["Hello Blocheads!"]]
+    23:     elsif not controller_class.method_defined?("#{action_name}")
+    24:       [404, {'Content-Type' => 'text/html'}, ["Invalid action: #{action_name}"]]
+    25:     else
+    26:       response = controller_class.new(env).send(action_name)
+    27:       if response.is_a? String
+    28:         [200, {'Content-Type' => 'text/html'}, [response]]
+    29:       else 
+    30:         [response.status, response.headers, response.body]
+    31:       end
+    32:     end
+    33:   end
+    34: end
+
+[1] pry(#<BlocWorks::Application>)> cd ..
+[2] pry(#<BlocWorks::Application>)> ls
+BlocWorks::Application#methods: call  controller_and_action
+locals: _  __  _dir_  _ex_  _file_  _in_  _out_  _pry_  action_name  controller_class  env  response
+[3] pry(#<BlocWorks::Application>)> whereami
+
+From: /Users/Home/bloc/rails-projects/bloc_works/lib/bloc_works.rb @ line 11 BlocWorks::Application#call:
+
+    10: def call(env)
+ => 11:   binding.pry
+    12:   if env['PATH_INFO'] == '/favicon.ico'
+    13:     [404, {'Content-Type' => 'text/html'}, []]
+    14:   else
+    15:     controller_class, action_name = self.controller_and_action(env)
+    16:     if action_name == ""
+    17:       action_name = "index" 
+    18:     elsif action_name.nil?
+    19:       action_name = "index"
+    20:     end
+    21:     if controller_class.nil? then
+    22:       [200, {'Content-Type' => 'text/html'}, ["Hello Blocheads!"]]
+    23:     elsif not controller_class.method_defined?("#{action_name}")
+    24:       [404, {'Content-Type' => 'text/html'}, ["Invalid action: #{action_name}"]]
+    25:     else
+    26:       response = controller_class.new(env).send(action_name)
+    27:       if response.is_a? String
+    28:         [200, {'Content-Type' => 'text/html'}, [response]]
+    29:       else 
+    30:         [response.status, response.headers, response.body]
+    31:       end
+    32:     end
+    33:   end
+    34: end
+
+[4] pry(#<BlocWorks::Application>)> action_name
+=> nil
+[5] pry(#<BlocWorks::Application>)> env
+=> {"GATEWAY_INTERFACE"=>"CGI/1.1",
+ "PATH_INFO"=>"/",
+ "QUERY_STRING"=>"",
+ "REMOTE_ADDR"=>"::1",
+ "REMOTE_HOST"=>"::1",
+ "REQUEST_METHOD"=>"GET",
+ "REQUEST_URI"=>"http://localhost:3000/",
+ "SCRIPT_NAME"=>"",
+ "SERVER_NAME"=>"localhost",
+ "SERVER_PORT"=>"3000",
+ "SERVER_PROTOCOL"=>"HTTP/1.1",
+ "SERVER_SOFTWARE"=>"WEBrick/1.3.1 (Ruby/2.3.0/2015-12-25)",
+ "HTTP_HOST"=>"localhost:3000",
+ "HTTP_CONNECTION"=>"keep-alive",
+ "HTTP_USER_AGENT"=>
+  "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36",
+ "HTTP_UPGRADE_INSECURE_REQUESTS"=>"1",
+ "HTTP_ACCEPT"=>"text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8",
+ "HTTP_ACCEPT_ENCODING"=>"gzip, deflate, br",
+ "HTTP_ACCEPT_LANGUAGE"=>"en-US,en;q=0.8",
+ "HTTP_COOKIE"=>"_ga=GA1.1.870703917.1507097200",
+ "rack.version"=>[1, 3],
+ "rack.input"=>#<Rack::Lint::InputWrapper:0x007fa213361b10 @input=#<StringIO:0x007fa21336ac10>>,
+ "rack.errors"=>#<Rack::Lint::ErrorWrapper:0x007fa213361ac0 @error=#<IO:<STDERR>>>,
+ "rack.multithread"=>true,
+ "rack.multiprocess"=>false,
+ "rack.run_once"=>false,
+ "rack.url_scheme"=>"http",
+ "rack.hijack?"=>true,
+ "rack.hijack"=>#<Proc:0x007fa213362150@/Users/Home/.rvm/gems/ruby-2.3.0/gems/rack-1.6.8/lib/rack/lint.rb:525>,
+ "rack.hijack_io"=>nil,
+ "HTTP_VERSION"=>"HTTP/1.1",
+ "REQUEST_PATH"=>"/",
+ "rack.tempfiles"=>[]}
+[6] pry(#<BlocWorks::Application>)> show-method env
+
+From: /Users/Home/.rvm/rubies/ruby-2.3.0/lib/ruby/2.3.0/pp.rb @ line 371:
+Class name: Hash
+Number of lines: 9
+
+class Hash # :nodoc:
+  def pretty_print(q) # :nodoc:
+    q.pp_hash self
+  end
+
+  def pretty_print_cycle(q) # :nodoc:
+    q.text(empty? ? '{}' : '{...}')
+  end
+end
+[7] pry(#<BlocWorks::Application>)> env.pretty_print
+ArgumentError: wrong number of arguments (given 0, expected 1)
+from /Users/Home/.rvm/rubies/ruby-2.3.0/lib/ruby/2.3.0/pp.rb:372:in `pretty_print'
+[8] pry(#<BlocWorks::Application>)> env.pretty_print("")
+NoMethodError: undefined method `pp_hash' for "":String
+from /Users/Home/.rvm/rubies/ruby-2.3.0/lib/ruby/2.3.0/pp.rb:373:in `pretty_print'
+[9] pry(#<BlocWorks::Application>)> env.pretty_print(env)
+NoMethodError: undefined method `pp_hash' for #<Hash:0x007fa213370250>
+from /Users/Home/.rvm/rubies/ruby-2.3.0/lib/ruby/2.3.0/pp.rb:373:in `pretty_print'
+[10] pry(#<BlocWorks::Application>)> env.pretty_print(help)
+NameError: undefined local variable or method `help' for #<BlocWorks::Application:0x007fa2130f0b60>
+from (pry):6:in `call'
+[11] pry(#<BlocWorks::Application>)> help
+Help
+  help               Show a list of commands or information about a specific command.
+
+Context
+  cd                 Move into a new context (object or scope).
+  find-method        Recursively search for a method within a class/module or the current namespace.
+  ls                 Show the list of vars and methods in the current scope.
+  pry-backtrace      Show the backtrace for the pry session.
+  raise-up           Raise an exception out of the current pry instance.
+  reset              Reset the repl to a clean state.
+  watch              Watch the value of an expression and print a notification whenever it changes.
+  whereami           Show code surrounding the current context.
+  wtf?               Show the backtrace of the most recent exception.
+
+Editing
+  /^\s*!\s*$/        Clear the input buffer.
+  amend-line         Amend a line of input in multi-line mode.
+  edit               Invoke the default editor on a file.
+  hist               Show and replay readline history.
+  play               Playback a string variable, method, line, or file as input.
+  show-input         Show the contents of the input buffer for the current multi-line expression.
+
+Introspection
+  ri                 View ri documentation.
+  show-doc           Show the documentation for a method or class.
+  show-source        Show the source for a method or class.
+  stat               View method information and set _file_ and _dir_ locals.
+
+Gems
+  gem-cd             Change working directory to specified gem's directory.
+  gem-install        Install a gem and refresh the gem cache.
+  gem-list           List and search installed gems.
+  gem-open           Opens the working directory of the gem in your editor.
+
+Commands
+  import-set         Import a pry command set.
+[12] pry(#<BlocWorks::Application>)> 
+[13] pry(#<BlocWorks::Application>)> q
+NameError: undefined local variable or method `q' for #<BlocWorks::Application:0x007fa2130f0b60>
+from (pry):7:in `call'
+[14] pry(#<BlocWorks::Application>)> quit
+::1 - - [24/Oct/2017:23:21:53 -0700] "GET / HTTP/1.1" 200 - 585.2586
+
+From: /Users/Home/bloc/rails-projects/bloc_works/lib/bloc_works.rb @ line 11 BlocWorks::Application#call:
+
+    10: def call(env)
+ => 11:   binding.pry
+    12:   if env['PATH_INFO'] == '/favicon.ico'
+    13:     [404, {'Content-Type' => 'text/html'}, []]
+    14:   else
+    15:     controller_class, action_name = self.controller_and_action(env)
+    16:     if action_name == ""
+    17:       action_name = "index" 
+    18:     elsif action_name.nil?
+    19:       action_name = "index"
+    20:     end
+    21:     if controller_class.nil? then
+    22:       [200, {'Content-Type' => 'text/html'}, ["Hello Blocheads!"]]
+    23:     elsif not controller_class.method_defined?("#{action_name}")
+    24:       [404, {'Content-Type' => 'text/html'}, ["Invalid action: #{action_name}"]]
+    25:     else
+    26:       response = controller_class.new(env).send(action_name)
+    27:       if response.is_a? String
+    28:         [200, {'Content-Type' => 'text/html'}, [response]]
+    29:       else 
+    30:         [response.status, response.headers, response.body]
+    31:       end
+    32:     end
+    33:   end
+    34: end
+
+[1] pry(#<BlocWorks::Application>)> quit
+::1 - - [24/Oct/2017:23:22:00 -0700] "GET /favicon.ico HTTP/1.1" 404 - 6.3699
+
+From: /Users/Home/bloc/rails-projects/bloc_works/lib/bloc_works.rb @ line 11 BlocWorks::Application#call:
+
+    10: def call(env)
+ => 11:   binding.pry
+    12:   if env['PATH_INFO'] == '/favicon.ico'
+    13:     [404, {'Content-Type' => 'text/html'}, []]
+    14:   else
+    15:     controller_class, action_name = self.controller_and_action(env)
+    16:     if action_name == ""
+    17:       action_name = "index" 
+    18:     elsif action_name.nil?
+    19:       action_name = "index"
+    20:     end
+    21:     if controller_class.nil? then
+    22:       [200, {'Content-Type' => 'text/html'}, ["Hello Blocheads!"]]
+    23:     elsif not controller_class.method_defined?("#{action_name}")
+    24:       [404, {'Content-Type' => 'text/html'}, ["Invalid action: #{action_name}"]]
+    25:     else
+    26:       response = controller_class.new(env).send(action_name)
+    27:       if response.is_a? String
+    28:         [200, {'Content-Type' => 'text/html'}, [response]]
+    29:       else 
+    30:         [response.status, response.headers, response.body]
+    31:       end
+    32:     end
+    33:   end
+    34: end
+
+[1] pry(#<BlocWorks::Application>)> help
+Help
+  help               Show a list of commands or information about a specific command.
+
+Context
+  cd                 Move into a new context (object or scope).
+  find-method        Recursively search for a method within a class/module or the current namespace.
+  ls                 Show the list of vars and methods in the current scope.
+  pry-backtrace      Show the backtrace for the pry session.
+  raise-up           Raise an exception out of the current pry instance.
+  reset              Reset the repl to a clean state.
+  watch              Watch the value of an expression and print a notification whenever it changes.
+  whereami           Show code surrounding the current context.
+  wtf?               Show the backtrace of the most recent exception.
+
+Editing
+  /^\s*!\s*$/        Clear the input buffer.
+  amend-line         Amend a line of input in multi-line mode.
+  edit               Invoke the default editor on a file.
+  hist               Show and replay readline history.
+  play               Playback a string variable, method, line, or file as input.
+  show-input         Show the contents of the input buffer for the current multi-line expression.
+
+Introspection
+  ri                 View ri documentation.
+  show-doc           Show the documentation for a method or class.
+  show-source        Show the source for a method or class.
+  stat               View method information and set _file_ and _dir_ locals.
+
+Gems
+  gem-cd             Change working directory to specified gem's directory.
+  gem-install        Install a gem and refresh the gem cache.
+  gem-list           List and search installed gems.
+  gem-open           Opens the working directory of the gem in your editor.
+
+Commands
+  import-set         Import a pry command set.
+  install-command    Install a disabled command.
+
+Aliases
+  !!!                Alias for `exit-program`
+  !!@                Alias for `exit-all`
+  $                  Alias for `show-source`
+  ?                  Alias for `show-doc`
+  @                  Alias for `whereami`
+  clipit             Alias for `gist --clip`
+  file-mode          Alias for `shell-mode`
+  history            Alias for `hist`
+  quit               Alias for `exit`
+  quit-program       Alias for `exit-program`
+  reload-method      Alias for `reload-code`
+  show-method        Alias for `show-source`
+
+Input and output
+  .<shell command>   All text following a '.' is forwarded to the shell.
+  cat                Show code from a file, pry's input buffer, or the last exception.
+  change-inspector   Change the current inspector proc.
+  change-prompt      Change the current prompt.
+  fix-indent         Correct the indentation for contents of the input buffer
+  list-inspectors    List the inspector procs available for use.
+  list-prompts       List the prompts available for use.
+  save-file          Export to a file using content from the repl.
+  shell-mode         Toggle shell mode. bring in pwd prompt and file completion.
+
+Misc
+  gist               Upload code, docs, history to https://gist.github.com/.
+  pry-version        Show pry version.
+  reload-code        Reload the source file that contains the specified code object.
+  toggle-color       Toggle syntax highlighting.
+
+Navigating pry
+  !pry               Start a pry session on current self.
+  disable-pry        Stops all future calls to pry and exits the current session.
+  exit               Pop the previous binding.
+  exit-all           End the current pry session.
+  exit-program       End the current program.
+  jump-to            Jump to a binding further up the stack.
+  nesting            Show nesting information.
+  switch-to          Start a new subsession on a binding in the current stack.
+
+Prompts
+  simple-prompt      Toggle the simple prompt.
+[2] pry(#<BlocWorks::Application>)> exit
+
+From: /Users/Home/bloc/rails-projects/bloc-books/app/controllers/books_controller.rb @ line 14 BooksController#index:
+
+    13: def index
+ => 14:   binding.pry   
+    15:   @books = Book.all
+    16:   render :index
+    17: end
+
+[1] pry(#<BooksController>)> Book.all
+=> [#<Book:0x007fa2129e6860 @author="David A. Black", @id=1, @library_id=1, @pages=520, @title="The Well-Grounded Rubyist 2">,
+ #<Book:0x007fa2129deae8
+  @author="Sandi Metz",
+  @id=2,
+  @library_id=1,
+  @pages=272,
+  @title="Practical Object-Oriented Design in Ruby vol.1">,
+ #<Book:0x007fa2129dc5e0 @author="Russ Olsen", @id=3, @library_id=1, @pages=448, @title="Eloquent Ruby">]
+[2] pry(#<BooksController>)> exit
+::1 - - [24/Oct/2017:23:24:16 -0700] "GET /books/ HTTP/1.1" 200 - 126.1472
+
+From: /Users/Home/bloc/rails-projects/bloc_works/lib/bloc_works.rb @ line 11 BlocWorks::Application#call:
+
+    10: def call(env)
+ => 11:   binding.pry
+    12:   if env['PATH_INFO'] == '/favicon.ico'
+    13:     [404, {'Content-Type' => 'text/html'}, []]
+    14:   else
+    15:     controller_class, action_name = self.controller_and_action(env)
+    16:     if action_name == ""
+    17:       action_name = "index" 
+    18:     elsif action_name.nil?
+    19:       action_name = "index"
+    20:     end
+    21:     if controller_class.nil? then
+    22:       [200, {'Content-Type' => 'text/html'}, ["Hello Blocheads!"]]
+    23:     elsif not controller_class.method_defined?("#{action_name}")
+    24:       [404, {'Content-Type' => 'text/html'}, ["Invalid action: #{action_name}"]]
+    25:     else
+    26:       response = controller_class.new(env).send(action_name)
+    27:       if response.is_a? String
+    28:         [200, {'Content-Type' => 'text/html'}, [response]]
+    29:       else 
+    30:         [response.status, response.headers, response.body]
+    31:       end
+    32:     end
+    33:   end
+    34: end
+
+[1] pry(#<BlocWorks::Application>)> exit
+
+From: /Users/Home/bloc/rails-projects/bloc-books/app/controllers/books_controller.rb @ line 25 BooksController#show:
+
+    24: def show
+ => 25:   binding.pry   
+    26:   id = @env["QUERY_STRING"].split('=')[1].to_i
+    27:   @book = Book.find(id)
+    28:   render :show
+    29: end
+
+[1] pry(#<BooksController>)> help
+Help
+  help               Show a list of commands or information about a specific command.
+
+Context
+  cd                 Move into a new context (object or scope).
+  find-method        Recursively search for a method within a class/module or the current namespace.
+  ls                 Show the list of vars and methods in the current scope.
+  pry-backtrace      Show the backtrace for the pry session.
+  raise-up           Raise an exception out of the current pry instance.
+  reset              Reset the repl to a clean state.
+  watch              Watch the value of an expression and print a notification whenever it changes.
+  whereami           Show code surrounding the current context.
+  wtf?               Show the backtrace of the most recent exception.
+
+Editing
+  /^\s*!\s*$/        Clear the input buffer.
+  amend-line         Amend a line of input in multi-line mode.
+  edit               Invoke the default editor on a file.
+  hist               Show and replay readline history.
+  play               Playback a string variable, method, line, or file as input.
+  show-input         Show the contents of the input buffer for the current multi-line expression.
+
+Introspection
+  ri                 View ri documentation.
+  show-doc           Show the documentation for a method or class.
+  show-source        Show the source for a method or class.
+  stat               View method information and set _file_ and _dir_ locals.
+
+Gems
+  gem-cd             Change working directory to specified gem's directory.
+  gem-install        Install a gem and refresh the gem cache.
+  gem-list           List and search installed gems.
+  gem-open           Opens the working directory of the gem in your editor.
+
+Commands
+  import-set         Import a pry command set.
+[2] pry(#<BooksController>)> edit
+=> nil
+[3] pry(#<BooksController>)> ls
+BlocWorks::Controller#methods: controller_dir  redirect_to  render
+BooksController#methods: book  book=  books  books=  create  destroy  edit  index  new  show  update  welcome
+instance variables: @env
+locals: _  __  _dir_  _ex_  _file_  _in_  _out_  _pry_  id
+[4] pry(#<BooksController>)> whereami
+
+From: /Users/Home/bloc/rails-projects/bloc-books/app/controllers/books_controller.rb @ line 25 BooksController#show:
+
+    24: def show
+ => 25:   binding.pry   
+    26:   id = @env["QUERY_STRING"].split('=')[1].to_i
+    27:   @book = Book.find(id)
+    28:   render :show
+    29: end
+
+[5] pry(#<BooksController>)> id
+=> nil
+[6] pry(#<BooksController>)> @env["QUERY_STRING"].split('=')[1].to_i
+=> 3
+[7] pry(#<BooksController>)> Book.find(@env["query_string"].split('=')[1].to_i
+[7] pry(#<BooksController>)* )  
+NoMethodError: undefined method `split' for nil:NilClass
+from (pry):12:in `show'
+[8] pry(#<BooksController>)> Book.find(@env["QUERY_STRING"].split('=')[1].to_i)
+=> #<Book:0x007fa21320a938 @author="Russ Olsen", @id=3, @library_id=1, @pages=448, @title="Eloquent Ruby">
+[9] pry(#<BooksController>)> exit
+::1 - - [24/Oct/2017:23:29:01 -0700] "GET /books/show?id=3 HTTP/1.1" 200 - 270.2213
+
+From: /Users/Home/bloc/rails-projects/bloc_works/lib/bloc_works.rb @ line 11 BlocWorks::Application#call:
+
+    10: def call(env)
+ => 11:   binding.pry
+    12:   if env['PATH_INFO'] == '/favicon.ico'
+    13:     [404, {'Content-Type' => 'text/html'}, []]
+    14:   else
+    15:     controller_class, action_name = self.controller_and_action(env)
+    16:     if action_name == ""
+    17:       action_name = "index" 
+    18:     elsif action_name.nil?
+    19:       action_name = "index"
+    20:     end
+    21:     if controller_class.nil? then
+    22:       [200, {'Content-Type' => 'text/html'}, ["Hello Blocheads!"]]
+    23:     elsif not controller_class.method_defined?("#{action_name}")
+    24:       [404, {'Content-Type' => 'text/html'}, ["Invalid action: #{action_name}"]]
+    25:     else
+    26:       response = controller_class.new(env).send(action_name)
+    27:       if response.is_a? String
+    28:         [200, {'Content-Type' => 'text/html'}, [response]]
+    29:       else 
+    30:         [response.status, response.headers, response.body]
+    31:       end
+    32:     end
+    33:   end
+    34: end
+
+[1] pry(#<BlocWorks::Application>)> exit
+
+From: /Users/Home/bloc/rails-projects/bloc-books/app/controllers/books_controller.rb @ line 14 BooksController#index:
+
+    13: def index
+ => 14:   binding.pry   
+    15:   @books = Book.all
+    16:   render :index
+    17: end
+
+[1] pry(#<BooksController>)> exit
+::1 - - [24/Oct/2017:23:29:23 -0700] "GET /books/index HTTP/1.1" 200 - 12.2683
+
