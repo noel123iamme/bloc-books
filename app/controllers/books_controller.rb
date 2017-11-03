@@ -1,64 +1,77 @@
 require_relative '../models/book'
+require "pry"
 
 class BooksController < BlocWorks::Controller
   attr_accessor :book, :books 
 
-	def welcome
+  def welcome
+    binding.pry   
     @book = Book.first
-		render :welcome
-	end
+    render :welcome
+  end
 
   def index
+    binding.pry   
     @books = Book.all
     render :index
   end
 
   def new
+    binding.pry   
     render :new 
   end
 
   def show
-  	id = @env["QUERY_STRING"].split('=')[1].to_i
+    binding.pry   
+    id = @env["QUERY_STRING"].split('=')[1].to_i
     @book = Book.find(id)
     render :show
   end
 
   def edit
-  	id = @env["QUERY_STRING"].split('=')[1].to_i
+    binding.pry   
+    id = @env["QUERY_STRING"].split('=')[1].to_i
     @book = Book.find(id)
     render :edit
   end
 
   def create
+    binding.pry   
     request = Rack::Request.new(@env)
-    title = request.params["title"]
+    title   = request.params["title"]
     Book.new(title).save
-    @book = Book.last
+    @book   = Book.last
     if @book.title == title
-      render :show
+      redirect_to '/books/show'
     else
       flash[:error] = "Error creating book.  Please try again."
-      render :new
+      redirect_to '/books/new'
     end
   end
 
   def update
+    binding.pry   
     request = Rack::Request.new(@env)
-    id = request.params["id"].to_i
+    id      = request.params["id"].to_i
+
+    puts request.params
 
     @book = Book.find(id)
+    puts "#{@book.id} - #{@book.title}"
     @book.title = request.params["title"]
-    @book.save
+    puts "#{@book.id} - #{@book.title}"
+    @book.save!
 
-    render :welcome
+    redirect_to "/books/welcome"
   end
 
   def destroy
+    binding.pry   
     request = Rack::Request.new(@env)
-    id = request.params["id"].to_i
+    id      = request.params["id"].to_i
 
     Book.destroy(id)
-    @book = Book.first
-    render :welcome
+
+    redirect_to "/books/welcome"
   end
 end

@@ -4,3 +4,7 @@ gem "rack", "~> 1.6"
 gem "erubis", "~>2.7"
 gem 'rack-test'
 gem 'test-unit'
+gem 'sqlite3'
+gem 'rake'
+gem 'pg'
+gem "pry"
