@@ -1,6 +1,8 @@
 <div>
-  <h1>Show Book</h1>
-  <p>Book Tile: <u><%= @book.title %></u></p>
-  <a href="/books/edit?=<%= @book.id %>">Edit this</a>
-  <a href="/books/index">show all</a>
+<h1>Show Book</h1>
+	<p>Book Tile: <u><%= @book.title %></u></p>
+	<p>Author: <%= @book.author %></p>
+	<p>Pages: <%= @book.pages %></p>
+	<a href="/books/<%= @book.id %>/edit">Edit This</a>
+	<a href="/books/index">Show All</a>
 </div>

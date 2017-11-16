@@ -4,74 +4,63 @@ require "pry"
 class BooksController < BlocWorks::Controller
   attr_accessor :book, :books 
 
-  def welcome
-    binding.pry   
+	def welcome
     @book = Book.first
-    render :welcome
-  end
+		render name: "Noel"
+	end
 
   def index
-    binding.pry   
     @books = Book.all
-    render :index
+    render 
   end
 
   def new
-    binding.pry   
-    render :new 
+    render 
   end
 
   def show
-    binding.pry   
-    id = @env["QUERY_STRING"].split('=')[1].to_i
+  	id = params['id'].to_i
     @book = Book.find(id)
-    render :show
+
+    puts "Title: [#{@book.title}]"
+
+    render 
   end
 
   def edit
-    binding.pry   
-    id = @env["QUERY_STRING"].split('=')[1].to_i
+  	id = params['id'].to_i
     @book = Book.find(id)
-    render :edit
+    render 
   end
 
   def create
-    binding.pry   
-    request = Rack::Request.new(@env)
-    title   = request.params["title"]
-    Book.new(title).save
-    @book   = Book.last
+    title = params["title"]
+    author = params["author"]
+    pages = params["pages"].to_i
+    Book.create(library_id: 0, title: title, author: author, pages: pages)
+    @book = Book.last
     if @book.title == title
-      redirect_to '/books/show'
+      redirect_to "/books/#{@book.id}/show"
     else
-      flash[:error] = "Error creating book.  Please try again."
-      redirect_to '/books/new'
+      redirect_to "/books"
     end
   end
 
   def update
-    binding.pry   
-    request = Rack::Request.new(@env)
-    id      = request.params["id"].to_i
-
-    puts request.params
-
+    id = params["id"].to_i
     @book = Book.find(id)
-    puts "#{@book.id} - #{@book.title}"
-    @book.title = request.params["title"]
-    puts "#{@book.id} - #{@book.title}"
+
+    @book.title = params["title"]
+    @book.author = params["author"]
+    @book.pages = params["pages"].to_i
     @book.save!
 
-    redirect_to "/books/welcome"
+    redirect_to "/books/#{@book.id}/show"
   end
 
   def destroy
-    binding.pry   
-    request = Rack::Request.new(@env)
-    id      = request.params["id"].to_i
-
+    id = params["id"].to_i
     Book.destroy(id)
-
-    redirect_to "/books/welcome"
+    redirect_to "/books"
   end
 end

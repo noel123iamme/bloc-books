@@ -1,20 +1,10 @@
 require 'sqlite3'
-require 'pg'
-require_relative 'config'
 
-module PG
-  class Connection
-    def execute(sql)
-      self.exec(sql).values
-    end
-  end
-end
-
-db = SQLite3::Database.new database_name
+db = SQLite3::Database.new "db.sqlite"
 id_type = 'INTEGER'
 
-db.execute("DROP TABLE book;");
-db.execute("DROP TABLE library;");
+# db.execute("DROP TABLE book;");
+# db.execute("DROP TABLE library;");
 
 sql = <<-SQL 
   CREATE TABLE library (

@@ -2,7 +2,9 @@
   <h1>Listing of Books</h4>
   <% for book in @books %>
     <% if !book.nil? %>
-      <p><a href="/books/show?id=<%= book.id %>"><%= book.title %></a></p>
+      <p><a href="/books/<%= book.id %>/show"> <%= book.title %> </a>
+        by <%= book.author %>
+      </p>
     <% end %>
   <% end %>
   <form action="/books/new" method="post">
